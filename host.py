@@ -79,10 +79,39 @@ if st.button('Run Predictions'):
         title='Stock Price Comparison',
         xaxis_title='Date',
         yaxis_title='Price',
-        xaxis_rangeslider_visible=False
+        xaxis_rangeslider_visible=False,
+        xaxis_type="date",
+        xaxis_rangeslider=dict(
+            visible=True,
+            thickness=0.05,
+            bgcolor="lightgray"
+        )
     )
 
     st.plotly_chart(fig, use_container_width=True)
+
+    #line chart for close price
+    # Create the line chart for close price
+    fig_close_price = go.Figure()
+    for company, data in data_dict.items():
+        fig_close_price.add_trace(go.Scatter(
+            x=data['Date'],
+            y=data['Close'],
+            mode='lines',
+            name=company
+        ))
+
+    fig_close_price.update_layout(
+        title='Close Price Comparison',
+        xaxis_title='Date',
+        yaxis_title='Price',
+        xaxis_type="date"
+    )
+
+    st.plotly_chart(fig_close_price, use_container_width=True)
+
+
+
 
 
 
