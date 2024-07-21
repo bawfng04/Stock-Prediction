@@ -91,7 +91,6 @@ if st.button('Run Predictions'):
     st.plotly_chart(fig, use_container_width=True)
 
     #line chart for close price
-    # Create the line chart for close price
     fig_close_price = go.Figure()
     for company, data in data_dict.items():
         fig_close_price.add_trace(go.Scatter(
@@ -105,7 +104,8 @@ if st.button('Run Predictions'):
         title='Close Price Comparison',
         xaxis_title='Date',
         yaxis_title='Price',
-        xaxis_type="date"
+        xaxis_type="date",
+        xaxis_rangeslider_visible = True
     )
 
     st.plotly_chart(fig_close_price, use_container_width=True)
