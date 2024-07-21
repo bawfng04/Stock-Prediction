@@ -6,12 +6,18 @@ from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
 import numpy as np
+import sys
 
 # python stockPrediction.py
 
-# Define constants
-STOCK_SYMBOL = 'AAPL' # Apple Inc.
-DAYS_BACK = 5000    # Number of days back to get stock data
+if len(sys.argv) < 3:
+    print("Usage: python stockPrediction.py <stock_symbol> <days_back>")
+    sys.exit(1)
+
+STOCK_SYMBOL = sys.argv[1]
+DAYS_BACK = int(sys.argv[2])
+
+
 
 def download_stock_data(symbol, start_date, end_date):
     #Download stock data from Yahoo Finance.
@@ -71,6 +77,10 @@ def main():
     # Output = predicted closing price
     print ("Predicted closing price: ")
     print(model.predict(features))
+    #save to file
+    with open('prediction_result.txt', 'w') as file:
+        file.write(str(model.predict(features)))
+    print("Completed")
 
 if __name__ == "__main__":
     main()

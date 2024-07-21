@@ -2,6 +2,12 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import yfinance as yf
+import subprocess
+import os
+#result
+
+
+# streamlit run host.py
 
 # test
 # print("---------ALL-----------")
@@ -50,11 +56,11 @@ if stock_name:
 selectedDays = st.slider('Select number of rollback days', min_value=1, max_value=3650, value=30, step=1)
 st.write(f'You selected {selectedDays} days')
 
-
-
-
-
-
-
-
-
+#combine 2 files
+if st.button('Run'):
+    subprocess.run(["python", "stockPrediction.py", selectedCompany, str(selectedDays)], check=True)
+    st.write(f"Stock Prediction for {stock_name} is completed.")
+    with open('prediction_result.txt', 'r') as file:
+        prediction_result = file.read()
+    st.write("Predicted closing price:")
+    st.write(prediction_result)
