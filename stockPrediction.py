@@ -25,6 +25,8 @@ def download_stock_data(symbol, start_date, end_date):
     data.reset_index(inplace=True) #    &
     return data
 
+
+
 def plot_candlestick_chart(data):
     # Plot candlestick chart
     figure = go.Figure(data=[go.Candlestick(x=data['Date'],
@@ -81,6 +83,9 @@ def main():
     with open('prediction_result.txt', 'w') as file:
         file.write(str(model.predict(features)))
     print("Completed")
+
+    with open('fetched_data.csv', 'w') as file:
+        data.to_csv(file, index=False)
 
 if __name__ == "__main__":
     main()

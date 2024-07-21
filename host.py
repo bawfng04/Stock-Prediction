@@ -7,6 +7,7 @@ import os
 #result
 
 
+
 # streamlit run host.py
 
 # test
@@ -58,9 +59,19 @@ st.write(f'You selected {selectedDays} days')
 
 #combine 2 files
 if st.button('Run'):
-    subprocess.run(["python", "stockPrediction.py", selectedCompany, str(selectedDays)], check=True)
+    #waiting for the model
+    with st.empty():
+        st.write('Running the model...')
+        subprocess.run(["python", "stockPrediction.py", selectedCompany, str(selectedDays)], check=True)
+        st.write("")
+
+    #display result
     st.write(f"Stock Prediction for {stock_name} is completed.")
     with open('prediction_result.txt', 'r') as file:
         prediction_result = file.read()
-    st.write("Predicted closing price:")
-    st.write(prediction_result)
+    st.write(f"Predicted closing price of { stock_name } is: { prediction_result }")
+    #display fetched data
+    with open('fetched_data.csv', 'r') as file:
+        data = pd.read_csv(file)
+    st.write(data.head()) #display first 5 rows
+    #st.write(data); #display all data
